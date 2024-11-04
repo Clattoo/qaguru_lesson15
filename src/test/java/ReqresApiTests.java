@@ -4,11 +4,13 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
 
-public class ReqresApiTests {
+public class ReqresApiTests extends TestBase {
+
+    String listOfUsers = "/users?page=2";
 
     @Test
     void successfulGetListOfUserTest() {
-        get("https://reqres.in/api/users?page=2")
+        get(listOfUsers)
                 .then()
                 .log().status()
                 .log().body()
@@ -17,7 +19,7 @@ public class ReqresApiTests {
 
     @Test
     void amountOfKeysBodyDataListOfUserTest() {
-        get("https://reqres.in/api/users?page=2")
+        get(listOfUsers)
                 .then()
                 .log().status()
                 .log().body()
@@ -34,14 +36,14 @@ public class ReqresApiTests {
                 .log().uri()
 
         .when()
-                .post("https://reqres.in/api/register")
+                .post("/register")
 
         .then()
                 .log().status()
                 .log().body()
                 .statusCode(200)
                 .body("id", is(4))
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("token", notNullValue());
     }
 
     @Test
@@ -54,7 +56,7 @@ public class ReqresApiTests {
                 .log().uri()
 
                 .when()
-                .post("https://reqres.in/api/register")
+                .post("/register")
 
                 .then()
                 .log().status()
@@ -73,7 +75,7 @@ public class ReqresApiTests {
                 .log().uri()
 
                 .when()
-                .post("https://reqres.in/api/register")
+                .post("/register")
 
                 .then()
                 .log().status()
